@@ -65,6 +65,9 @@ Cafe-Wifi/
     ├── footer.html
     ├── index.html
     └── add.html
+```
+
+---
 
 ## Application Structure
 
