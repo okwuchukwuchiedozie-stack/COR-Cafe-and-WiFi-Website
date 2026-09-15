@@ -1,0 +1,253 @@
+{% extends "base.html" %}
+
+
+{% block title %}
+    Cafe & Wifi - Find Your Perfect Cafe
+{% endblock %}
+
+{% block content %}
+
+
+{% with messages = get_flashed_messages(with_categories=true) %}
+
+    {% if messages %}
+
+        <div class="container mt-4">
+
+            {% for category, message in messages %}
+
+                <div
+                    class="alert alert-{{ category }} alert-dismissible fade show"
+                    role="alert"
+                >
+
+                    {% if category == "success" %}
+
+                        <i class="bi bi-check-circle-fill"></i>
+
+                    {% else %}
+
+                        <i class="bi bi-info-circle-fill"></i>
+
+                    {% endif %}
+
+                    {{ message }}
+
+                    <button
+                        type="button"
+                        class="btn-close"
+                        data-bs-dismiss="alert"
+                        aria-label="Close"
+                    ></button>
+
+                </div>
+
+            {% endfor %}
+
+        </div>
+
+    {% endif %}
+
+{% endwith %}
+
+
+<section class="py-5 bg-white">
+
+    <div class="container text-center">
+
+        <h1 class="display-5 fw-bold">
+            Find Your Perfect Cafe
+        </h1>
+
+        <p class="lead text-muted">
+            Discover cafes with WiFi, sockets and great coffee.
+        </p>
+
+        <a
+            href="{{ url_for('add_cafe') }}"
+            class="btn btn-warning btn-lg"
+        >
+
+            <i class="bi bi-plus-circle"></i>
+
+            Add Cafe
+
+        </a>
+
+    </div>
+
+</section>
+
+<div class="container py-5">
+
+    {% if cafes %}
+
+        <div class="row g-4">
+
+            {% for cafe in cafes %}
+
+                <div class="col-md-6 col-lg-4">
+
+                    <div class="card h-100 shadow-sm border-0">
+
+                        <img
+                            src="{{ cafe.img_url }}"
+                            class="card-img-top"
+                            alt="{{ cafe.name }}"
+                            style="height: 220px; object-fit: cover;"
+                        >
+
+                        <div class="card-body d-flex flex-column">
+
+                            <h5 class="card-title fw-bold">
+
+                                {{ cafe.name }}
+
+                            </h5>
+
+                            <p class="text-muted mb-2">
+
+                                <i class="bi bi-geo-alt"></i>
+
+                                {{ cafe.location }}
+
+                            </p>
+
+                            <p class="mb-2">
+
+                                <i class="bi bi-people"></i>
+
+                                {{ cafe.seats }} seats
+
+                            </p>
+
+                            <p class="mb-3">
+
+                                <i class="bi bi-cup-hot"></i>
+
+                                Coffee: {{ cafe.coffee_price }}
+
+                            </p>
+
+                            <div class="mb-3">
+
+                                {% if cafe.has_wifi %}
+
+                                    <span class="badge bg-success">
+
+                                        <i class="bi bi-wifi"></i>
+                                        WiFi
+
+                                    </span>
+
+                                {% endif %}
+
+
+                                {% if cafe.has_sockets %}
+
+                                    <span class="badge bg-primary">
+
+                                        <i class="bi bi-plug"></i>
+                                        Sockets
+
+                                    </span>
+
+                                {% endif %}
+
+
+                                {% if cafe.has_toilet %}
+
+                                    <span class="badge bg-secondary">
+
+                                        <i class="bi bi-door-open"></i>
+                                        Toilet
+
+                                    </span>
+
+                                {% endif %}
+
+
+                                {% if cafe.can_take_calls %}
+
+                                    <span class="badge bg-dark">
+
+                                        <i class="bi bi-telephone"></i>
+                                        Calls
+
+                                    </span>
+
+                                {% endif %}
+
+                            </div>
+
+                            <div class="d-flex gap-2 mt-auto">
+
+                                <a
+                                    href="{{ cafe.map_url }}"
+                                    target="_blank"
+                                    class="btn btn-outline-primary flex-grow-1"
+                                >
+
+                                    <i class="bi bi-map"></i>
+
+                                    View on Map
+
+                                </a>
+
+                                <a
+                                    href="{{ url_for('delete_cafe', cafe_id=cafe.id) }}"
+                                    class="btn btn-outline-danger"
+                                    onclick="return confirm('Are you sure you want to delete {{ cafe.name }}?');"
+                                >
+
+                                    <i class="bi bi-trash"></i>
+
+                                    Delete
+
+                                </a>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            {% endfor %}
+
+        </div>
+
+    {% else %}
+
+        <div class="text-center py-5">
+
+            <i class="bi bi-cup-hot display-1 text-muted"></i>
+
+            <h3 class="mt-3">
+                No cafes available
+            </h3>
+
+            <p class="text-muted">
+                Be the first to add a cafe.
+            </p>
+
+            <a
+                href="{{ url_for('add_cafe') }}"
+                class="btn btn-warning"
+            >
+
+                <i class="bi bi-plus-circle"></i>
+
+                Add Cafe
+
+            </a>
+
+        </div>
+
+    {% endif %}
+
+</div>
+
+
+{% endblock %}

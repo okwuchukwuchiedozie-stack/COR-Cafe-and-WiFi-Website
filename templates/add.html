@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+
+
+{% block title %}
+    Add Cafe - Cafe & Wifi
+{% endblock %}
+
+
+{% block content %}
+
+<div class="container py-5">
+
+    <div class="row justify-content-center">
+
+        <div class="col-lg-7 col-md-9">
+
+            <div class="card shadow border-0">
+
+                <div class="card-body p-4 p-md-5">
+
+                    <div class="text-center mb-4">
+
+                        <i
+                            class="bi bi-cup-hot-fill display-5 text-warning">
+                        </i>
+
+                        <h1 class="fw-bold mt-2">
+                            Add a Cafe
+                        </h1>
+
+                        <p class="text-muted">
+                            Add a new cafe to the directory.
+                        </p>
+
+                    </div>
+
+                    {% from 'bootstrap5/form.html' import render_form %}
+
+                    {{ render_form(form) }}
+
+                    <div class="text-center mt-3">
+
+                        <a
+                            href="{{ url_for('home') }}"
+                            class="text-decoration-none"
+                        >
+
+                            <i class="bi bi-arrow-left"></i>
+
+                            Back to cafes
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}
